@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Harvard Bridge Crossing</title>
+
+    <script src="{{STATIC_URL}}js/external/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        to_boston_urls = ["http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mit&stopId=03",
+                          "http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mbta&stopId=00075"];
+
+        to_boston_routes = ["Saferide Boston West",
+                            "Saferide Boston East",
+                            "Boston Daytime",
+                            "1",
+                            "Ct1"];
+
+        to_cambridge_urls = ["http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mit&stopId=29",
+                             "http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mbta&stopId=00095"];
+
+        to_cambridge_routes = ["Saferide Boston East",
+                               "Boston Daytime",
+                               "1",
+                               "Ct1"];
+
+        function arrival(route, wait) {
+          this.route = route;
+          this.wait = parseInt(wait);
+        };
+
+        function compare(a, b) {
+          if (a.wait < b.wait) {
+            return -1;
+          } else if (a.wait > b.wait) {
+            return 1;
+          } else {
+            return 0;
+          }
+        };
+
+        function fetch_arrivals(xml_urls, valid_routes) {
+          var arrivals = [];
+
+          $.each(xml_urls, function(index, value) {
+            $.ajax({
+              url: value,
+              async: false, 
+              success: function(data) {
+                $xml = $(data);
+                predictions = $xml.find("predictions");
+                $.each(predictions, function(index, route) {
+                  route_title = route.getAttribute("routeTitle");
+                  if ($.inArray(route_title, valid_routes) !== -1) { // !== -1 ? really?
+                    $.each(route.getElementsByTagName("prediction"), function(index, prediction) {
+                      wait = prediction.getAttribute("minutes");
+                      arrivals.push(new arrival(route_title, wait));
+                    });
+                  }
+                });
+              }
+            });
+          })
+
+          return arrivals;
+        }
+
+        function update_table(table, arrivals) {
+          arrivals.sort(compare);
+          $.each(arrivals, function(index, arrival) {
+            row = $("<tr></tr>");
+            cell1 = $("<td></td>");
+            cell1.text(arrival.wait);
+
+            cell2 = $("<td></td>");
+            cell2.text(arrival.route);
+
+            row.append(cell1);
+            row.append(cell2);
+            table.append(row);
+          })
+        };
+
+        update_table($("#tbl_to_boston"), fetch_arrivals(to_boston_urls, to_boston_routes));
+        update_table($("#tbl_to_cambridge"), fetch_arrivals(to_cambridge_urls, to_cambridge_routes));
+      });
+    </script>
+  </head>
+  <body>
+    <div id="content">
+      <p>To: Cambridge
+      </br>Stop: Mass. Ave at Beacon St.</p>
+      <table id="tbl_to_cambridge">
+      </table>
+
+      <p>To: Boston
+      </br>Stop: 84 Mass. Ave</p>
+      <table id="tbl_to_boston">
+      </table>
+    </div>
+  </body>
+</html>
