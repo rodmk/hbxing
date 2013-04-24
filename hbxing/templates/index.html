@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <title>Harvard Bridge Crossing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="{{STATIC_URL}}js/jquery-1.9.1.min.js" type="text/javascript"></script>
     <script src="{{STATIC_URL}}js/bootstrap.js" type="text/javascript"></script>
 
     <link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet" media="screen">
-    <link href="{{STATIC_URL}}css/bootstrap-responsiveness.css" rel="stylesheet" media="screen">
+    <link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet" media="screen">
 
     <script type="text/javascript">
       $(document).ready(function() {
@@ -106,21 +107,47 @@
         };
 
         update();
-        var updateIntervalID = window.setInterval(update, 30000);
+        var updateIntervalID = setInterval(update, 30000);
+
+        $("#tocambridge a").click(function(e) {
+          e.preventdefault();
+          $(this).tab("show");
+        });
+
+        $("#toboston a").click(function(e) {
+          e.preventdefault();
+          $(this).tab("show");
+        });
       });
     </script>
   </head>
   <body>
-    <div id="content">
-      <p>To: Cambridge
-      </br>Stop: Mass. Ave at Beacon St.</p>
-      <table id="tbl_to_cambridge">
-      </table>
+    <div class="container-fluid">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tocambridge" data-toggle="tab">To Cambridge</a></li>
+        <li><a href="#toboston" data-toggle="tab">To Boston</a></li>
+      </ul>
+      <div id="content" class="tab-content">
+        <div class="tab-pane active" id="tocambridge">
+          <div class="row-fluid">
+            <div class="span12">
+              Stop: Mass. Ave at Beacon St.
+              <table id="tbl_to_cambridge" class="table">
+              </table>
+            </div>
+          </div>
+        </div>
 
-      <p></br>To: Boston
-      </br>Stop: 84 Mass. Ave</p>
-      <table id="tbl_to_boston">
-      </table>
+        <div class="tab-pane" id="toboston">
+          <div class="row-fluid">
+            <div class="span12">
+              Stop: 84 Mass. Ave
+              <table id="tbl_to_boston" class="table">
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
