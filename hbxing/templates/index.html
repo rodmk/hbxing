@@ -8,6 +8,14 @@
 
     <script type="text/javascript">
       $(document).ready(function() {
+        to_cambridge_urls = ["http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mit&stopId=13",
+                             "http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mbta&stopId=00095"];
+
+        to_cambridge_routes = ["Saferide Boston East",
+                               "Boston Daytime",
+                               "1",
+                               "Ct1"];
+
         to_boston_urls = ["http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mit&stopId=03",
                           "http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mbta&stopId=00075"];
 
@@ -16,14 +24,6 @@
                             "Boston Daytime",
                             "1",
                             "Ct1"];
-
-        to_cambridge_urls = ["http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mit&stopId=29",
-                             "http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mbta&stopId=00095"];
-
-        to_cambridge_routes = ["Saferide Boston East",
-                               "Boston Daytime",
-                               "1",
-                               "Ct1"];
 
         function arrival(route, wait) {
           this.route = route;
@@ -68,6 +68,12 @@
 
         function update_table(table, arrivals) {
           arrivals.sort(compare);
+
+          table_contents = table.children()[0];
+          if (table_contents) {
+            table_contents.remove(); // clear before update
+          }
+
           $.each(arrivals, function(index, arrival) {
             row = $("<tr></tr>");
             cell1 = $("<td></td>");
@@ -82,8 +88,13 @@
           })
         };
 
-        update_table($("#tbl_to_boston"), fetch_arrivals(to_boston_urls, to_boston_routes));
-        update_table($("#tbl_to_cambridge"), fetch_arrivals(to_cambridge_urls, to_cambridge_routes));
+        function update() {
+          update_table($("#tbl_to_boston"), fetch_arrivals(to_boston_urls, to_boston_routes));
+          update_table($("#tbl_to_cambridge"), fetch_arrivals(to_cambridge_urls, to_cambridge_routes));
+        };
+
+        update();
+        var updateIntervalID = window.setInterval(update, 30000);
       });
     </script>
   </head>
