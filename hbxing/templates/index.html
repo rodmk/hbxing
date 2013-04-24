@@ -7,6 +7,8 @@
 
     <script src="{{STATIC_URL}}js/jquery-1.9.1.min.js" type="text/javascript"></script>
     <script src="{{STATIC_URL}}js/bootstrap.js" type="text/javascript"></script>
+    <!-- fixes timers not firing after scrolling on ios6 -->
+    <script src="{{STATIC_URL}}js/ios6-timers.js" type="text/javascript"></script> 
 
     <link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet" media="screen">
@@ -107,7 +109,7 @@
         };
 
         update();
-        var updateIntervalID = setInterval(update, 30000);
+        var updateIntervalID = window.setInterval(update, 30000, true);
 
         $("#tocambridge a").click(function(e) {
           e.preventdefault();
