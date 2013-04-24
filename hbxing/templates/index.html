@@ -12,6 +12,7 @@
 
     <link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+    <link href="{{STATIC_URL}}css/font-awesome.css" rel="stylesheet" media="screen">
 
     <script type="text/javascript">
       $(document).ready(function() {
@@ -84,10 +85,7 @@
         function update_table(table, arrivals) {
           arrivals.sort(compare);
 
-          table_contents = table.children()[0];
-          if (table_contents) {
-            table_contents.remove(); // clear before update
-          }
+          table.html(""); // clear before update
 
           $.each(arrivals, function(index, arrival) {
             row = $("<tr></tr>");
@@ -134,7 +132,15 @@
           <div class="row-fluid">
             <div class="span12">
               Stop: Mass. Ave at Beacon St.
-              <table id="tbl_to_cambridge" class="table">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th><i class="icon-time"></i></th>
+                    <th><i class="icon-truck"></i></th>
+                  </tr>
+                </thead>
+                <tbody id="tbl_to_cambridge">
+                </tbody>
               </table>
             </div>
           </div>
@@ -144,7 +150,15 @@
           <div class="row-fluid">
             <div class="span12">
               Stop: 84 Mass. Ave
-              <table id="tbl_to_boston" class="table">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th><i class="icon-time"></i></th>
+                    <th><i class="icon-truck"></i></th>
+                  </tr>
+                </thead>
+                <tbody id="tbl_to_boston">
+                </tbody>
               </table>
             </div>
           </div>
