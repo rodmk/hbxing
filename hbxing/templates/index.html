@@ -4,7 +4,11 @@
     <meta charset="utf-8">
     <title>Harvard Bridge Crossing</title>
 
-    <script src="{{STATIC_URL}}js/external/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="{{STATIC_URL}}js/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="{{STATIC_URL}}js/bootstrap.js" type="text/javascript"></script>
+
+    <link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="{{STATIC_URL}}css/bootstrap-responsiveness.css" rel="stylesheet" media="screen">
 
     <script type="text/javascript">
       $(document).ready(function() {
@@ -24,6 +28,14 @@
                             "Boston Daytime",
                             "1",
                             "Ct1"];
+
+        route_names = {
+          "Saferide Boston West": "Boston West",
+          "Saferide Boston East": "Boston East",
+          "Boston Daytime": "Boston Daytime",
+          "1": "1 Bus",
+          "Ct1": "CT1 Bus",
+        };
 
         function arrival(route, wait) {
           this.route = route;
@@ -80,7 +92,7 @@
             cell1.text(arrival.wait);
 
             cell2 = $("<td></td>");
-            cell2.text(arrival.route);
+            cell2.text(route_names[arrival.route]);
 
             row.append(cell1);
             row.append(cell2);
@@ -105,7 +117,7 @@
       <table id="tbl_to_cambridge">
       </table>
 
-      <p>To: Boston
+      <p></br>To: Boston
       </br>Stop: 84 Mass. Ave</p>
       <table id="tbl_to_boston">
       </table>
