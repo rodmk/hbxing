@@ -89,7 +89,7 @@
 
           $.each(arrivals, function(index, arrival) {
             row = $("<tr></tr>");
-            cell1 = $("<td></td>");
+            cell1 = $("<td class='span1'></td>");
             cell1.text(arrival.wait);
 
             cell2 = $("<td></td>");
@@ -102,64 +102,68 @@
         };
 
         function update() {
+          $("#refresh_icon").addClass("icon-spin");
           update_table($("#tbl_to_boston"), fetch_arrivals(to_boston_urls, to_boston_routes));
           update_table($("#tbl_to_cambridge"), fetch_arrivals(to_cambridge_urls, to_cambridge_routes));
+          setTimeout(function(){
+            $("#refresh_icon").removeClass("icon-spin");
+          }, 1000); // delay it, so it seems responsive
         };
 
         update();
         var updateIntervalID = window.setInterval(update, 30000, true);
 
-        $("#tocambridge a").click(function(e) {
-          e.preventdefault();
-          $(this).tab("show");
-        });
-
-        $("#toboston a").click(function(e) {
-          e.preventdefault();
-          $(this).tab("show");
+        $("#refresh").click(function(e) {
+          e.preventDefault();
+          update();
         });
       });
     </script>
   </head>
   <body>
     <div class="container-fluid">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#tocambridge" data-toggle="tab">To Cambridge</a></li>
-        <li><a href="#toboston" data-toggle="tab">To Boston</a></li>
-      </ul>
-      <div id="content" class="tab-content">
-        <div class="tab-pane active" id="tocambridge">
-          <div class="row-fluid">
-            <div class="span12">
-              Stop: Mass. Ave at Beacon St.
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th><i class="icon-time"></i></th>
-                    <th><i class="icon-truck"></i></th>
-                  </tr>
-                </thead>
-                <tbody id="tbl_to_cambridge">
-                </tbody>
-              </table>
+      <div class="row-fluid">
+        <div class="span12">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tocambridge" data-toggle="tab">To Cambridge</a></li>
+            <li><a href="#toboston" data-toggle="tab">To Boston</a></li>
+            <li class="pull-right"><a id="refresh" href="javascript:void(0);" class="tab"><i id="refresh_icon" class="icon-refresh"></i></a></li>
+          </ul>
+          <div id="content" class="tab-content">
+            <div class="tab-pane active" id="tocambridge">
+              <div class="row-fluid">
+                <div class="span12">
+                  Stop: Mass. Ave at Beacon St.
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th><i class="icon-time"></i></th>
+                        <th><i class="icon-truck"></i></th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbl_to_cambridge">
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div class="tab-pane" id="toboston">
-          <div class="row-fluid">
-            <div class="span12">
-              Stop: 84 Mass. Ave
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th><i class="icon-time"></i></th>
-                    <th><i class="icon-truck"></i></th>
-                  </tr>
-                </thead>
-                <tbody id="tbl_to_boston">
-                </tbody>
-              </table>
+            <div class="tab-pane" id="toboston">
+              <div class="row-fluid">
+                <div class="span12">
+                  Stop: 84 Mass. Ave
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th><i class="icon-time"></i></th>
+                        <th><i class="icon-truck"></i></th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbl_to_boston">
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
