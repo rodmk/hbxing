@@ -14,6 +14,13 @@
     <link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet" media="screen">
     <link href="{{STATIC_URL}}css/font-awesome.css" rel="stylesheet" media="screen">
 
+    <style>
+      .container-fluid {
+        padding-right: 0px;
+        padding-left: 0px;
+      }
+    </style>
+
     <script type="text/javascript">
       $(document).ready(function() {
         to_cambridge_urls = ["http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mit&stopId=13",
@@ -86,6 +93,21 @@
           arrivals.sort(compare);
 
           table.html(""); // clear before update
+
+          if (arrivals.length === 0) {
+            row = $("<tr></tr>");
+            cell1 = $("<td class='span1'></td>");
+            cell1.html("<i class='icon-warning-sign'></i>");
+
+            cell2 = $("<td></td>");
+            cell2.text("No buses running!");
+
+            row.append(cell1);
+            row.append(cell2);
+            table.append(row);
+
+            return;
+          }
 
           $.each(arrivals, function(index, arrival) {
             row = $("<tr></tr>");
