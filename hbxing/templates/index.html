@@ -153,51 +153,42 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span12">
-          <ul class="nav nav-tabs">
-            <li class="active"><a href="#tocambridge" data-toggle="tab">To Cambridge</a></li>
-            <li><a href="#toboston" data-toggle="tab">To Boston</a></li>
-            <li class="pull-right"><a id="refresh" href="javascript:void(0);" class="tab"><i id="refresh_icon" class="icon-refresh"></i></a></li>
-          </ul>
-          <div id="content" class="tab-content">
-            <div class="tab-pane active" id="tocambridge">
-              <div class="row-fluid">
-                <div class="span12">
-                  <p>Stop: Mass. Ave at Beacon St.</p>
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th><i class="icon-time"></i></th>
-                        <th><i class="icon-truck"></i></th>
-                      </tr>
-                    </thead>
-                    <tbody id="tbl_to_cambridge">
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tocambridge" data-toggle="tab">To Cambridge</a></li>
+        <li><a href="#toboston" data-toggle="tab">To Boston</a></li>
+        <li class="pull-right"><a id="refresh" href="javascript:void(0);" class="tab"><i id="refresh_icon" class="icon-refresh"></i></a></li>
+      </ul>
 
-            <div class="tab-pane" id="toboston">
-              <div class="row-fluid">
-                <div class="span12">
-                  <p>Stop: 84 Mass. Ave</p>
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th><i class="icon-time"></i></th>
-                        <th><i class="icon-truck"></i></th>
-                      </tr>
-                    </thead>
-                    <tbody id="tbl_to_boston">
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div id="content" class="tab-content">
+        <div class="tab-pane active" id="tocambridge">
+          <p>Stop: Mass. Ave at Beacon St.</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th><i class="icon-time"></i></th>
+                <th><i class="icon-truck"></i></th>
+              </tr>
+            </thead>
+
+            <tbody id="tbl_to_cambridge">
+            </tbody>
+          </table>
         </div>
+
+        <div class="tab-pane" id="toboston">
+          <p>Stop: 84 Mass. Ave</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th><i class="icon-time"></i></th>
+                <th><i class="icon-truck"></i></th>
+              </tr>
+            </thead>
+            <tbody id="tbl_to_boston">
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>
   </body>
